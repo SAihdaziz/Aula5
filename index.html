@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados do usuário</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+ 
+    <canvas id="can"></canvas> 
+
+  <main>
+<form class="form-container">
+   <h1>Dados do usuário</h1>
+  <!-- DADOS DO USUÁRIO -->
+  <fieldset class="form-section">
+    <legend>Dados do usuário</legend>
+
+    <div class="input-group">
+      <input type="text" id="nome" required>
+      <label for="nome">Nome</label>
+    </div>
+
+    <div class="input-group">
+      <input type="text" id="sobrenome" required>
+      <label for="sobrenome">Sobrenome</label>
+    </div>
+
+    <div class="input-group">
+      <input type="email" id="mail" required>
+      <label for="mail">E-mail</label>
+    </div>
+  </fieldset>
+
+
+  <!-- ENDEREÇO -->
+  <fieldset class="form-section">
+    <legend>Endereço</legend>
+
+    <div class="input-group">
+      <input type="text" id="rua">
+      <label for="rua">Rua</label>
+    </div>
+
+    <div class="input-group">
+      <input type="number" id="numero">
+      <label for="numero">Número</label>
+    </div>
+
+    <div class="input-group">
+      <input type="text" id="bairro">
+      <label for="bairro">Bairro</label>
+    </div>
+
+    <div class="input-group">
+      <input type="text" id="cidade">
+      <label for="cidade">Cidade</label>
+    </div>
+  </fieldset>
+
+
+  <!-- PAGAMENTO -->
+  <fieldset class="form-section">
+    <legend>Dados de pagamento</legend>
+
+    <div class="input-group">
+      <input type="text" id="cartao">
+      <label for="cartao">Número do cartão</label>
+    </div>
+
+    <div class="input-group">
+      <input type="text" id="validade">
+      <label for="validade">Validade</label>
+    </div>
+
+    <div class="input-group">
+      <input type="text" id="cvv">
+      <label for="cvv">CVV</label>
+    </div>
+  </fieldset>
+
+
+  <!-- OBSERVAÇÕES -->
+  <fieldset class="form-section">
+    <legend>Observações</legend>
+
+    <div class="input-group full">
+      <textarea id="observation" required></textarea>
+      <label for="observation">Observações</label>
+    </div>
+  </fieldset>
+
+  <button type="reset">Limpar</button>
+  <button type="submit">Enviar</button>
+
+</form>
+  </main>
+ 
+   <script>
+    var c = document.getElementById("can");
+c.width = window.innerWidth;
+c.height = window.innerHeight;
+
+var ctx = c.getContext('2d');
+var numbers = 600;
+var p = [];
+
+var base_image = new Image();
+base_image.src = 'https://s-media-cache-ak0.pinimg.com/originals/4f/31/e8/4f31e8ff8aac6e8ae6729b73a550b340.jpg';
+
+function create() {
+    for (var i = 0; i < numbers; i++) {
+        p.push({
+            x: Math.random() * c.width,
+            y: Math.random() * c.height,
+            vy: (Math.random() * 5) + 2
+        });
+    }
+}
+
+function update() {
+    ctx.drawImage(base_image, 0, 0, c.width, c.height);
+
+    for (var i = 0; i < numbers; i++) {
+        p[i].y += p[i].vy;
+
+        if (p[i].y > c.height) {
+            p[i].y = 0;
+        }
+
+        ctx.fillStyle = "skyblue";
+        ctx.globalAlpha = 0.6;
+        ctx.fillRect(p[i].x, p[i].y, 1, 15);
+    }
+}
+
+function run() {
+    update();
+    requestAnimationFrame(run);
+}
+
+create();
+run();
+
+   </script>
+
+</body>
+</html>
